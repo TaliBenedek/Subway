@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 public class SubwayLines extends HashMap<String, String[]>
 {
-    public String[] getConnectedStations(String stationName, Subway subway)
+    public String[] getConnectedStations(String stationName, SubwayStations stations)
     {
-        String objectId = subway.getObjectId(stationName);
+        String objectId = stations.getObjectId(stationName);
         ArrayList<String> connections = new ArrayList<>();
         Iterator<Entry<String, String[]>> it = this.entrySet().iterator();
         while(it.hasNext())
@@ -16,13 +16,13 @@ public class SubwayLines extends HashMap<String, String[]>
             {
                 if(line[index].equals(objectId))
                 {
-                    if(!connections.contains(subway.getName(line[index-1])))
+                    if(!connections.contains(stations.getName(line[index-1])))
                     {
-                        connections.add(subway.getName(line[index - 1]));
+                        connections.add(stations.getName(line[index - 1]));
                     }
-                    if(!connections.contains(subway.getName(line[index+1])))
+                    if(!connections.contains(stations.getName(line[index+1])))
                     {
-                        connections.add(subway.getName(line[index + 1]));
+                        connections.add(stations.getName(line[index + 1]));
                     }
                 }
             }

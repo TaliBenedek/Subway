@@ -7,13 +7,13 @@ import java.nio.file.Paths;
 
 public class JsonObjectReader
 {
-    Subway stations;
+    SubwayStations stations;
 
-    public Subway readJsonObject() throws IOException
+    public SubwayStations readJsonObject() throws IOException
     {
         Gson gson = new Gson();
         Reader reader = Files.newBufferedReader(Paths.get("SubwayStations.json"));
-        stations = gson.fromJson(reader, Subway.class);
+        stations = gson.fromJson(reader, SubwayStations.class);
         reader.close();
         return stations;
     }

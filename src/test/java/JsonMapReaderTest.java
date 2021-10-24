@@ -15,7 +15,7 @@ public class JsonMapReaderTest
     {
         //given
         JsonMapReader reader = new JsonMapReader();
-        Subway stations = mock(Subway.class);
+        SubwayStations stations = mock(SubwayStations.class);
         doReturn("1").when(stations).getObjectId("Astor Pl");
         doReturn("23").when(stations).getObjectId("Mets - Willets Point");
         doReturn("Bleecker St").when(stations).getName("457");

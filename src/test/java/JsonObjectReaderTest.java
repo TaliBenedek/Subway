@@ -16,7 +16,7 @@ public class JsonObjectReaderTest
         JsonObjectReader reader = new JsonObjectReader();
 
         //when
-        Subway stations = reader.readJsonObject();
+        SubwayStations stations = reader.readJsonObject();
 
         //then
         assertEquals(stations.features.get(0).getName(), "Astor Pl");
