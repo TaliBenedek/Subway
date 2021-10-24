@@ -4,11 +4,11 @@ public class SubwayStations
 {
     List<Feature> features;
 
-    public String getName(String objectId)
+    public String getName(int objectId)
     {
         for(Feature feature: features)
         {
-            if(feature.getObjectId().equals(objectId))
+            if(feature.getObjectId() == objectId)
             {
                 return feature.getName();
             }
@@ -16,7 +16,7 @@ public class SubwayStations
         return null;
     }
 
-    public String getObjectId(String name)
+    public int getObjectId(String name)
     {
         for(Feature feature: features)
         {
@@ -25,7 +25,7 @@ public class SubwayStations
                 return feature.getObjectId();
             }
         }
-        return null;
+        return -1;
     }
 
     public static class Feature
@@ -43,7 +43,7 @@ public class SubwayStations
             return properties.line.split("-");
         }
 
-        public String getObjectId()
+        public int getObjectId()
         {
             return properties.objectid;
         }
@@ -63,7 +63,7 @@ public class SubwayStations
     public static class FeatureProperties {
         String name;
         String line;
-        String objectid;
+        int objectid;
     }
 
     public static class Geometry {

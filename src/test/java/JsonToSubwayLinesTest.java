@@ -1,10 +1,10 @@
-import org.junit.Assert;
+
 import org.junit.Test;
+import org.mockito.internal.util.collections.Sets;
 
 import java.io.IOException;
 
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.*;
 
 public class JsonToSubwayLinesTest
 {
@@ -13,20 +13,15 @@ public class JsonToSubwayLinesTest
     {
         //given
         JsonToSubwayLines jsonConverter = new JsonToSubwayLines();
-        SubwayStations stations = mock(SubwayStations.class);
-        doReturn("1").when(stations).getObjectId("Astor Pl");
-        doReturn("23").when(stations).getObjectId("Mets - Willets Point");
-        doReturn("Bleecker St").when(stations).getName("457");
-        doReturn("Union Sq - 14th St").when(stations).getName("105");
-        doReturn("Junction Blvd").when(stations).getName("24");
-        doReturn("Flushing - Main St").when(stations).getName("25");
-        doReturn("111th St").when(stations).getName("190");
 
         //when
         SubwayLines lines = jsonConverter.readJsonAsMap();
 
         //then
-        Assert.assertArrayEquals(new String[]{"Bleecker St", "Union Sq - 14th St"}, lines.getConnectedStations("Astor Pl", stations));
-        Assert.assertArrayEquals(new String[]{"Junction Blvd", "Flushing - Main St", "111th St"}, lines.getConnectedStations("Mets - Willets Point", stations));
+        assertEquals(Sets.newSet("A", "B", "C", "D", "E", "F", "G", "J",
+                "L", "M", "N", "Q", "R", "S", "W", "Z",
+                "7 Express", "6 Express", "1", "2",
+                "3", "4", "5", "6", "7"), lines.keySet());
+        assertArrayEquals(new int[]{470, 197, 466, 204, 101, 95, 93, 103, 54, 24, 23, 25}, lines.get("7 Express"));
     }
 }
