@@ -6,11 +6,11 @@ public class SubwayStations
 
     public String getName(String objectId)
     {
-        for(int index = 0; index < features.size(); index++)
+        for(Feature feature: features)
         {
-            if(this.features.get(index).getObjectId().equals(objectId))
+            if(feature.getObjectId().equals(objectId))
             {
-                return this.features.get(index).getName();
+                return feature.getName();
             }
         }
         return null;
@@ -18,11 +18,11 @@ public class SubwayStations
 
     public String getObjectId(String name)
     {
-        for(int index = 0; index < features.size(); index++)
+        for(Feature feature: features)
         {
-            if(this.features.get(index).getName().equals(name))
+            if(feature.getName().equals(name))
             {
-                return this.features.get(index).getObjectId();
+                return feature.getObjectId();
             }
         }
         return null;
