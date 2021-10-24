@@ -1,29 +1,34 @@
-import com.google.gson.Gson;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
-class JsonMapReaderTest
+public class JsonMapReaderTest
 {
     @Test
-    void readJsonAsMap() throws IOException
+    public void readJsonAsMap() throws IOException
     {
         //given
         JsonMapReader reader = new JsonMapReader();
+        Subway stations = mock(Subway.class);
+        doReturn("1").when(stations).getObjectId("Astor Pl");
+        doReturn("23").when(stations).getObjectId("Mets - Willets Point");
+        doReturn("Bleecker St").when(stations).getName("457");
+        doReturn("Union Sq - 14th St").when(stations).getName("105");
+        doReturn("Junction Blvd").when(stations).getName("24");
+        doReturn("Flushing - Main St").when(stations).getName("25");
+        doReturn("111th St").when(stations).getName("190");
 
         //when
         SubwayLines lines = reader.readJsonAsMap();
 
         //then
-        assertEquals(lines.containsKey("A"), true);
-        assertEquals(lines.containsKey("6 Express"), true);
-        assertEquals(lines.get("A")[0], "55");
-        assertEquals(lines.get("6 Express")[4], "1");
+        Assert.assertArrayEquals(new String[]{"Bleecker St", "Union Sq - 14th St"}, lines.getConnectedStations("Astor Pl", stations));
+        Assert.assertArrayEquals(new String[]{"Junction Blvd", "Flushing - Main St", "111th St"}, lines.getConnectedStations("Mets - Willets Point", stations));
     }
 }

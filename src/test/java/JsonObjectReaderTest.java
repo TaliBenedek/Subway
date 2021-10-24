@@ -1,13 +1,16 @@
-import org.junit.jupiter.api.Test;
+
+
+import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class JsonObjectReaderTest
+
+public class JsonObjectReaderTest
 {
     @Test
-    void readJsonObject() throws IOException
+    public void readJsonObject() throws IOException
     {
         //given
         JsonObjectReader reader = new JsonObjectReader();
