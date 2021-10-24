@@ -4,6 +4,30 @@ public class Subway
 {
     List<Feature> features;
 
+    public String getName(String objectId)
+    {
+        for(int index = 0; index < features.size(); index++)
+        {
+            if(this.features.get(index).getObjectId().equals(objectId))
+            {
+                return this.features.get(index).getName();
+            }
+        }
+        return null;
+    }
+
+    public String getObjectId(String name)
+    {
+        for(int index = 0; index < features.size(); index++)
+        {
+            if(this.features.get(index).getName().equals(name))
+            {
+                return this.features.get(index).getObjectId();
+            }
+        }
+        return null;
+    }
+
     public static class Feature
     {
         FeatureProperties properties;
@@ -19,7 +43,7 @@ public class Subway
             return properties.line.split("-");
         }
 
-        public int getObjectId()
+        public String getObjectId()
         {
             return properties.objectid;
         }
@@ -33,12 +57,13 @@ public class Subway
         {
             return geometry.coordinates.get(1);
         }
+
     }
 
     public static class FeatureProperties {
         String name;
         String line;
-        int objectid;
+        String objectid;
     }
 
     public static class Geometry {
