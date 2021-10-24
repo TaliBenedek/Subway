@@ -7,16 +7,16 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 
-public class JsonObjectReaderTest
+public class JsonToSubwayStationsTest
 {
     @Test
     public void readJsonObject() throws IOException
     {
         //given
-        JsonObjectReader reader = new JsonObjectReader();
+        JsonToSubwayStations jsonConverter = new JsonToSubwayStations();
 
         //when
-        SubwayStations stations = reader.readJsonObject();
+        SubwayStations stations = jsonConverter.readJsonObject();
 
         //then
         assertEquals(stations.features.get(0).getName(), "Astor Pl");

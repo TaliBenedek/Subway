@@ -3,18 +3,16 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-public class JsonMapReaderTest
+public class JsonToSubwayLinesTest
 {
     @Test
     public void readJsonAsMap() throws IOException
     {
         //given
-        JsonMapReader reader = new JsonMapReader();
+        JsonToSubwayLines jsonConverter = new JsonToSubwayLines();
         SubwayStations stations = mock(SubwayStations.class);
         doReturn("1").when(stations).getObjectId("Astor Pl");
         doReturn("23").when(stations).getObjectId("Mets - Willets Point");
@@ -25,7 +23,7 @@ public class JsonMapReaderTest
         doReturn("111th St").when(stations).getName("190");
 
         //when
-        SubwayLines lines = reader.readJsonAsMap();
+        SubwayLines lines = jsonConverter.readJsonAsMap();
 
         //then
         Assert.assertArrayEquals(new String[]{"Bleecker St", "Union Sq - 14th St"}, lines.getConnectedStations("Astor Pl", stations));
