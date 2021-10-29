@@ -1,10 +1,25 @@
+import com.google.gson.annotations.SerializedName;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Subway
+public class SubwayStations
 {
-    List<Feature> features;
+    @SerializedName("features")
+    List<Station> stations;
 
-    public static class Feature
+    public Map<Integer, Station> getStations()
+    {
+        Map<Integer, SubwayStations.Station> stationMap= new HashMap<>();
+        for(SubwayStations.Station station : this.stations)
+        {
+            stationMap.put(station.properties.objectid, station);
+        }
+        return stationMap;
+    }
+
+    public static class Station
     {
         FeatureProperties properties;
         Geometry geometry;
