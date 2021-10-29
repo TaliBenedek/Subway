@@ -7,7 +7,7 @@ public class SubwayLines extends HashMap<String, int[]>
     public ArrayList<SubwayStations.Station> getConnectedStations(SubwayStations subway, SubwayStations.Station station)
     {
         ArrayList<SubwayStations.Station> connections = new ArrayList<>();
-        Map map = subway.getStations();
+        Map<Integer, SubwayStations.Station> map = subway.getStations();
         for(Map.Entry<String, int[]> entry : this.entrySet())
         {
             int[] stations = entry.getValue();
