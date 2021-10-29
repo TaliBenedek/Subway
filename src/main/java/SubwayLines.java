@@ -4,28 +4,39 @@ import java.util.Map;
 
 public class SubwayLines extends HashMap<String, int[]>
 {
-    public String[] getConnectedStations(String stationName, SubwayStations stations)
+    public ArrayList<SubwayStations.Station> getConnectedStations(SubwayStations subway, SubwayStations.Station station)
     {
-        int objectId = stations.getObjectId(stationName);
-        ArrayList<String> connections = new ArrayList<>();
+        ArrayList<SubwayStations.Station> connections = new ArrayList<>();
+        Map map = subway.getStations();
         for(Map.Entry<String, int[]> entry : this.entrySet())
         {
-            int[] line = entry.getValue();
-            for(int index = 0; index < line.length; index++)
+            int[] stations = entry.getValue();
+            for(int index = 0; index < stations.length; index++)
             {
-                if(line[index] == objectId)
+                if(stations[index] == station.getObjectId())
                 {
-                    if(!connections.contains(stations.getName(line[index-1])))
+                    //not first
+                    if(index != 0)
                     {
-                        connections.add(stations.getName(line[index - 1]));
+                        SubwayStations.Station connection = (SubwayStations.Station)map.get(stations[index - 1]);
+                        if(!connections.contains(connection))
+                        {
+                            connections.add(connection);
+                        }
                     }
-                    if(!connections.contains(stations.getName(line[index+1])))
+
+                    //not last
+                    if((index + 1) != stations.length)
                     {
-                        connections.add(stations.getName(line[index + 1]));
+                        SubwayStations.Station connection = (SubwayStations.Station)map.get(stations[index + 1]);
+                        if(!connections.contains(connection))
+                        {
+                            connections.add(connection);
+                        }
                     }
                 }
             }
         }
-        return connections.toArray(new String[0]);
+        return connections;
     }
 }

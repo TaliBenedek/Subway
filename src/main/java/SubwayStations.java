@@ -1,34 +1,25 @@
+import com.google.gson.annotations.SerializedName;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SubwayStations
 {
-    List<Feature> features;
+    @SerializedName("features")
+    List<Station> stations;
 
-    public String getName(int objectId)
+    public Map<Integer, Station> getStations()
     {
-        for(Feature feature: features)
+        Map<Integer, SubwayStations.Station> stationMap= new HashMap<>();
+        for(SubwayStations.Station station : this.stations)
         {
-            if(feature.getObjectId() == objectId)
-            {
-                return feature.getName();
-            }
+            stationMap.put(station.properties.objectid, station);
         }
-        return null;
+        return stationMap;
     }
 
-    public int getObjectId(String name)
-    {
-        for(Feature feature: features)
-        {
-            if(feature.getName().equals(name))
-            {
-                return feature.getObjectId();
-            }
-        }
-        return -1;
-    }
-
-    public static class Feature
+    public static class Station
     {
         FeatureProperties properties;
         Geometry geometry;
@@ -57,7 +48,6 @@ public class SubwayStations
         {
             return geometry.coordinates.get(1);
         }
-
     }
 
     public static class FeatureProperties {
