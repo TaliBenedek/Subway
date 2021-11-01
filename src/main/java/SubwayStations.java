@@ -1,5 +1,6 @@
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,20 +10,16 @@ public class SubwayStations
     @SerializedName("features")
     List<Station> stations;
 
-    public Map<Integer, Station> getStations()
-    {
-        Map<Integer, SubwayStations.Station> stationMap= new HashMap<>();
-        for(SubwayStations.Station station : this.stations)
-        {
-            stationMap.put(station.properties.objectid, station);
-        }
-        return stationMap;
-    }
-
     public static class Station
     {
         FeatureProperties properties;
         Geometry geometry;
+        List<Station> connections;
+
+        public Station()
+        {
+            this.connections = new ArrayList<>();
+        }
 
         public String getName()
         {
@@ -48,15 +45,85 @@ public class SubwayStations
         {
             return geometry.coordinates.get(1);
         }
+
+        public double getDistance(Station station)
+        {
+            return Math.sqrt(Math.pow((this.getLatitude() - station.getLatitude()), 2) +
+                    Math.pow((this.getLongitude() - station.getLongitude()), 2));
+        }
+
+        public double getDistance(double latitude, double longitude)
+        {
+            return Math.sqrt(Math.pow((this.getLatitude() - latitude), 2) +
+                    Math.pow((this.getLongitude() - longitude), 2));
+        }
+
+        public List<Station> getConnections()
+        {
+            return connections;
+        }
+
+        public void connect(Station station)
+        {
+            if(!this.connections.contains(station))
+            {
+                this.connections.add(station);
+            }
+            if(!station.connections.contains(station))
+            {
+                station.connections.add(this);
+            }
+        }
     }
 
-    public static class FeatureProperties {
+    public static class FeatureProperties
+    {
         String name;
         String line;
         int objectid;
     }
 
-    public static class Geometry {
+    public static class Geometry
+    {
         List<Double> coordinates;
     }
+
+    public Map<Integer, Station> getStations()
+    {
+        Map<Integer, SubwayStations.Station> stationMap = new HashMap<>();
+        for (SubwayStations.Station station : this.stations)
+        {
+            stationMap.put(station.properties.objectid, station);
+        }
+        return stationMap;
+    }
+
+    public void connectStations(SubwayLines lines)
+    {
+        Map<Integer, Station> map = this.getStations();
+        for (String line : lines.keySet())
+        {
+            int[] stations = lines.get(line);
+            for (int i = 0; i < stations.length - 1; i++)
+            {
+                map.get(stations[i]).connect(map.get(stations[i + 1]));
+            }
+        }
+    }
+
+    public Station getClosestStation(double latitude, double longitude)
+    {
+        double distance = Integer.MAX_VALUE;
+        Station closestStation = null;
+        for(Station station: this.stations)
+        {
+            if(station.getDistance(latitude, longitude) < distance)
+            {
+                closestStation = station;
+                distance = station.getDistance(latitude, longitude);
+            }
+        }
+        return closestStation;
+    }
+
 }
