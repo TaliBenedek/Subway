@@ -3,18 +3,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Node
+public class Node implements Comparable<Node>
 {
     private SubwayStations.Station station;
     private double distance = Integer.MAX_VALUE; //distance from source node
-    private List<Node> shortestPath = new LinkedList<>();
-    Map<Node, Integer> adjacentNodes = new HashMap<>();
-    private SubwayStations.Station previous;
+    private List<SubwayStations.Station> shortestPath = new LinkedList<>();
+    private Map<Node, Integer> adjacentNodes = new HashMap<>();
 
     public Node(SubwayStations.Station station)
     {
         this.station = station;
-        this.previous = null;
     }
 
     public void setDistance(double distance)
@@ -27,12 +25,17 @@ public class Node
         return distance;
     }
 
-    public void setShortestPath(List<Node> shortestPath)
+    public void setShortestPath(List<SubwayStations.Station> shortestPath)
     {
         this.shortestPath = shortestPath;
     }
 
-    public List<Node> getShortestPath()
+    public void addToPath(Node node)
+    {
+        this.shortestPath.add(node.getStation());
+    }
+
+    public List<SubwayStations.Station> getShortestPath()
     {
         return shortestPath;
     }
@@ -52,13 +55,9 @@ public class Node
         return station;
     }
 
-    public void setPrevious(SubwayStations.Station station)
+    @Override
+    public int compareTo(Node o)
     {
-        this.previous = station;
-    }
-
-    public SubwayStations.Station getPrevious(SubwayStations.Station station)
-    {
-        return this.previous;
+        return Double.compare(this.distance, o.distance);
     }
 }
