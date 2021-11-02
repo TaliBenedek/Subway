@@ -1,9 +1,6 @@
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SubwayStations
 {
@@ -67,6 +64,27 @@ public class SubwayStations
             {
                 station.connections.add(this);
             }
+        }
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (this == o)
+            {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass())
+            {
+                return false;
+            }
+            Station station = (Station) o;
+            return this.getLatitude() == station.getLatitude() && this.getLongitude() == station.getLongitude();
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(properties, geometry, connections);
         }
     }
 

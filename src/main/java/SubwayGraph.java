@@ -2,13 +2,8 @@ import java.util.*;
 
 public class SubwayGraph
 {
-    private Set<Node> nodes = new HashSet<>();
-    private Map<SubwayStations.Station, Node> map = new HashMap<>();
-
-    public SubwayGraph()
-    {
-
-    }
+    Set<Node> nodes = new HashSet<>();
+    Map<SubwayStations.Station, Node> map = new HashMap<>();
 
     public void setUpGraph(SubwayStations subway)
     {
@@ -20,16 +15,16 @@ public class SubwayGraph
                 node = new Node(station);
                 map.put(station, node);
                 nodes.add(node);
-            }
-            for (SubwayStations.Station connection : station.getConnections())
-            {
-                if (!map.containsKey(connection))
+                for (SubwayStations.Station connection : station.getConnections())
                 {
-                    Node connectionNode = new Node(connection);
-                    map.put(connection, connectionNode);
-                    nodes.add(connectionNode);
-                    node.addNeighbor(connectionNode, 1);
-                    connectionNode.addNeighbor(node, 1);
+                    if (!map.containsKey(connection))
+                    {
+                        Node connectionNode = new Node(connection);
+                        map.put(connection, connectionNode);
+                        nodes.add(connectionNode);
+                        node.addNeighbor(connectionNode, 1);
+                        connectionNode.addNeighbor(node, 1);
+                    }
                 }
             }
         }

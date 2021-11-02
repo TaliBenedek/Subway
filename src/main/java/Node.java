@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Node implements Comparable<Node>
 {
@@ -13,6 +10,27 @@ public class Node implements Comparable<Node>
     public Node(SubwayStations.Station station)
     {
         this.station = station;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        Node node = (Node) o;
+        return Double.compare(node.distance, distance) == 0 && station.equals(node.station) && adjacentNodes.equals(node.adjacentNodes);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(station, distance, shortestPath, adjacentNodes);
     }
 
     public void setDistance(double distance)
