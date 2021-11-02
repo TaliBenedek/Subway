@@ -27,11 +27,11 @@ public class Node implements Comparable<Node>
         return Double.compare(node.distance, distance) == 0 && station.equals(node.station) && adjacentNodes.equals(node.adjacentNodes);
     }
 
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(station, distance, shortestPath, adjacentNodes);
-    }
+//    @Override
+//    public int hashCode()
+//    {
+//        return Objects.hash(station, distance, shortestPath, adjacentNodes);
+//    }
 
     public void setDistance(double distance)
     {

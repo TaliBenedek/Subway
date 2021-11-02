@@ -81,11 +81,11 @@ public class SubwayStations
             return this.getLatitude() == station.getLatitude() && this.getLongitude() == station.getLongitude();
         }
 
-        @Override
-        public int hashCode()
-        {
-            return Objects.hash(properties, geometry, connections);
-        }
+//        @Override
+//        public int hashCode()
+//        {
+//            return Objects.hash(properties, geometry, connections);
+//        }
     }
 
     public static class FeatureProperties
