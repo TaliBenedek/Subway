@@ -46,12 +46,6 @@ public class SubwayStations
             return geometry.coordinates.get(1);
         }
 
-        public double getDistance(Station station)
-        {
-            return Math.sqrt(Math.pow((this.getLatitude() - station.getLatitude()), 2) +
-                    Math.pow((this.getLongitude() - station.getLongitude()), 2));
-        }
-
         public double getDistance(double latitude, double longitude)
         {
             return Math.sqrt(Math.pow((this.getLatitude() - latitude), 2) +
@@ -113,17 +107,14 @@ public class SubwayStations
 
     public Station getClosestStation(double latitude, double longitude)
     {
-        double distance = Integer.MAX_VALUE;
-        Station closestStation = null;
+        Station closestStation = this.stations.get(0);
         for(Station station: this.stations)
         {
-            if(station.getDistance(latitude, longitude) < distance)
+            if(station.getDistance(latitude, longitude) < closestStation.getDistance(latitude, longitude))
             {
                 closestStation = station;
-                distance = station.getDistance(latitude, longitude);
             }
         }
         return closestStation;
     }
-
 }
