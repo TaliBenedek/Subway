@@ -1,6 +1,7 @@
 import com.google.gson.annotations.SerializedName;
 
 import java.util.*;
+import java.util.function.ToDoubleFunction;
 
 public class SubwayStations
 {
@@ -78,14 +79,14 @@ public class SubwayStations
                 return false;
             }
             Station station = (Station) o;
-            return this.getLatitude() == station.getLatitude() && this.getLongitude() == station.getLongitude();
+            return this.getObjectId()  == station.getObjectId();
         }
 
-//        @Override
-//        public int hashCode()
-//        {
-//            return Objects.hash(properties, geometry, connections);
-//        }
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(properties.objectid);
+        }
     }
 
     public static class FeatureProperties
@@ -125,12 +126,18 @@ public class SubwayStations
 
     public Station getClosestStation(double latitude, double longitude)
     {
-        Station closestStation = this.stations.get(0);
+//        Station closestStation = stations.stream()
+//                .min(Comparator.comparingDouble(station -> station.getDistance(latitude, longitude)))
+//                .get();
+        Station closestStation = null;
+        double minDistance = Double.MAX_VALUE;
         for(Station station: this.stations)
         {
-            if(station.getDistance(latitude, longitude) < closestStation.getDistance(latitude, longitude))
+            double distance = station.getDistance(latitude, longitude);
+            if(distance < minDistance)
             {
                 closestStation = station;
+                minDistance = distance;
             }
         }
         return closestStation;

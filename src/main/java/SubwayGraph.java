@@ -36,7 +36,7 @@ public class SubwayGraph
         Node destinationNode = map.get(destination);
         sourceNode.setDistance(0);
         Set<Node> visitedNodes = new HashSet<>();
-        PriorityQueue<Node> unvisitedQ = new PriorityQueue();
+        PriorityQueue<Node> unvisitedQ = new PriorityQueue<>();
         unvisitedQ.add(sourceNode);
         while (!unvisitedQ.isEmpty())
         {
@@ -61,13 +61,13 @@ public class SubwayGraph
         return (LinkedList<SubwayStations.Station>) destinationNode.getShortestPath();
     }
 
-    private static void calculateMinimumDistance(Node evaluationNode, double edgeWeight, Node sourceNode)
+    private static void calculateMinimumDistance(Node adjacentNode, double edgeWeight, Node currentNode)
     {
-        double sourceDistance = sourceNode.getDistance();
-        if (sourceDistance + edgeWeight < evaluationNode.getDistance())
+        double sourceDistance = currentNode.getDistance();
+        if (sourceDistance + edgeWeight < adjacentNode.getDistance())
         {
-            evaluationNode.setDistance(sourceDistance + edgeWeight);
-            evaluationNode.addToPath(sourceNode);
+            adjacentNode.setDistance(sourceDistance + edgeWeight);
+            adjacentNode.addToPath(currentNode);
         }
     }
 }

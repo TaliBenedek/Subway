@@ -24,14 +24,14 @@ public class Node implements Comparable<Node>
             return false;
         }
         Node node = (Node) o;
-        return Double.compare(node.distance, distance) == 0 && station.equals(node.station) && adjacentNodes.equals(node.adjacentNodes);
+        return this.station.equals(node.station);
     }
 
-//    @Override
-//    public int hashCode()
-//    {
-//        return Objects.hash(station, distance, shortestPath, adjacentNodes);
-//    }
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(station);
+    }
 
     public void setDistance(double distance)
     {
