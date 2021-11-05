@@ -61,7 +61,7 @@ public class SubwayStations
             {
                 this.connections.add(station);
             }
-            if(!station.connections.contains(station))
+            if(!station.connections.contains(this))
             {
                 station.connections.add(this);
             }

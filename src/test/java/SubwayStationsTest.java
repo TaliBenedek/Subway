@@ -2,9 +2,28 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class SubwayStationsTest
 {
+    @Test
+    public void connectStations() throws IOException
+    {
+        //given
+        JsonToSubwayStations jsonConverter = new JsonToSubwayStations();
+        SubwayStations subway = jsonConverter.readJsonObject();
+        JsonToSubwayLines linesConverter = new JsonToSubwayLines();
+        SubwayLines lines = linesConverter.readJsonAsMap();
+        List<SubwayStations.Station> expected = Arrays.asList(subway.stations.get(456),subway.stations.get(104));
+
+        //when
+        subway.connectStations(lines);
+
+        //then
+        Assert.assertEquals(expected, subway.stations.get(0).connections);
+    }
+
     @Test
     public void getDistance() throws IOException
     {
