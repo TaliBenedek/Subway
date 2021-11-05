@@ -83,6 +83,12 @@ public class SubwayStations
         }
 
         @Override
+        public String toString()
+        {
+            return "Name: " + properties.name + " ObjectId: " + properties.objectid;
+        }
+
+        @Override
         public int hashCode()
         {
             return Objects.hash(properties.objectid);

@@ -45,7 +45,7 @@ public class SubwayGraphTest
         SubwayGraph graph = new SubwayGraph(subway);
         SubwayStations.Station start = subway.stations.get(0);
         SubwayStations.Station destination = subway.stations.get(31);
-        List<SubwayStations.Station> expected = Arrays.asList(subway.stations.get(1),
+        List<SubwayStations.Station> expected = Arrays.asList(subway.stations.get(0),
                 subway.stations.get(104),
                 subway.stations.get(91),
                 subway.stations.get(199),

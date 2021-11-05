@@ -2,12 +2,11 @@ import java.util.*;
 
 public class SubwayGraph
 {
-    Map<SubwayStations.Station, Node> map;
+    Map<SubwayStations.Station, Node> map = new HashMap<>();
     private final int DISTANCE_BETWEEN_STATIONS = 1;
 
     public SubwayGraph(SubwayStations subway)
     {
-        map = new HashMap<>();
         for (SubwayStations.Station station : subway.stations)
         {
             Node node = new Node(station);
@@ -34,17 +33,18 @@ public class SubwayGraph
         Node destinationNode = map.get(destination);
         sourceNode.setDistance(0);
         List<Node> visitedNodes = new ArrayList<>();
-        PriorityQueue<Node> unvisitedQ = new PriorityQueue<>();
-        unvisitedQ.add(sourceNode);
-        while (!unvisitedQ.isEmpty())
+        List<Node> unvisitedNodes = new ArrayList<>();
+        unvisitedNodes.add(sourceNode);
+        while (!unvisitedNodes.isEmpty())
         {
-            Node currentNode = unvisitedQ.poll();
+            Node currentNode = getShortestDistanceNode(unvisitedNodes);
+            unvisitedNodes.remove(currentNode);
             for (Node neighbor : currentNode.getNeighbors())
             {
                 if (!visitedNodes.contains(neighbor))
                 {
                     calculateMinimumDistance(neighbor, DISTANCE_BETWEEN_STATIONS, currentNode);
-                    unvisitedQ.add(neighbor);
+                    unvisitedNodes.add(neighbor);
                 }
             }
             visitedNodes.add(currentNode);
@@ -53,16 +53,46 @@ public class SubwayGraph
                 break;
             }
         }
-        return destinationNode.getShortestPath();
+        return backtrack(sourceNode, destinationNode);
     }
 
-    private static void calculateMinimumDistance(Node adjacentNode, double edgeWeight, Node currentNode)
+    private Node getShortestDistanceNode(List<Node> unvisitedNodes)
     {
-        double sourceDistance = currentNode.getDistance();
+        Node minNode = null;
+        double minDistance = Double.MAX_VALUE;
+        for(Node node: unvisitedNodes)
+        {
+            double distance = node.getDistance();
+            if(distance < minDistance)
+            {
+                minNode = node;
+                minDistance = distance;
+            }
+        }
+        return minNode;
+    }
+
+    private static void calculateMinimumDistance(Node adjacentNode, double edgeWeight, Node sourceNode)
+    {
+        double sourceDistance = sourceNode.getDistance();
         if (sourceDistance + edgeWeight < adjacentNode.getDistance())
         {
             adjacentNode.setDistance(sourceDistance + edgeWeight);
-            adjacentNode.addToPath(currentNode);
+            adjacentNode.setPrevious(sourceNode);
         }
+    }
+
+    private List<SubwayStations.Station> backtrack(Node source, Node destination)
+    {
+        List<SubwayStations.Station> shortestPath = new ArrayList<>();
+        Node previous = destination.getPrevious();
+        shortestPath.add(previous.getStation());
+        while(previous != source)
+        {
+            previous = previous.getPrevious();
+            shortestPath.add(previous.getStation());
+        }
+        Collections.reverse(shortestPath);
+        return shortestPath;
     }
 }

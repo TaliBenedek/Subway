@@ -6,6 +6,7 @@ public class Node implements Comparable<Node>
     private double distance = Integer.MAX_VALUE; //distance from source node
     private List<SubwayStations.Station> shortestPath = new ArrayList<>();
     private List<Node> neighbors = new ArrayList<>();
+    private Node previous;
 
     public Node(SubwayStations.Station station)
     {
@@ -48,9 +49,15 @@ public class Node implements Comparable<Node>
         this.shortestPath = shortestPath;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Node:" + station.toString();
+    }
+
     public void addToPath(Node node)
     {
-        this.shortestPath.add(node.getStation());
+        shortestPath.add(node.getStation());
     }
 
     public List<SubwayStations.Station> getShortestPath()
@@ -60,7 +67,7 @@ public class Node implements Comparable<Node>
 
     public void addNeighbor(Node node)
     {
-        this.neighbors.add(node);
+        neighbors.add(node);
     }
 
     public List<Node> getNeighbors()
@@ -71,6 +78,16 @@ public class Node implements Comparable<Node>
     public SubwayStations.Station getStation()
     {
         return station;
+    }
+
+    public void setPrevious(Node node)
+    {
+        previous = node;
+    }
+
+    public Node getPrevious()
+    {
+        return previous;
     }
 
     @Override
