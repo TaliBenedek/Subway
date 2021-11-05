@@ -2,54 +2,49 @@ import java.util.*;
 
 public class SubwayGraph
 {
-    Set<Node> nodes = new HashSet<>();
-    Map<SubwayStations.Station, Node> map = new HashMap<>();
+    Map<SubwayStations.Station, Node> map;
+    private final int DISTANCE_BETWEEN_STATIONS = 1;
 
-    public void setUpGraph(SubwayStations subway)
+    public SubwayGraph(SubwayStations subway)
     {
+        map = new HashMap<>();
         for (SubwayStations.Station station : subway.stations)
         {
-            Node node = null;
-            if (!map.containsKey(station))
+            Node node = new Node(station);
+            map.put(station, node);
+        }
+        for(Map.Entry<SubwayStations.Station, Node> entry: map.entrySet())
+        {
+            SubwayStations.Station currentStation = entry.getKey();
+            Node currentNode = entry.getValue();
+            for(SubwayStations.Station connection: currentStation.getConnections())
             {
-                node = new Node(station);
-                map.put(station, node);
-                nodes.add(node);
-                for (SubwayStations.Station connection : station.getConnections())
+                Node connectionNode = map.get(connection);
+                if(!currentNode.getNeighbors().contains(connectionNode))
                 {
-                    if (!map.containsKey(connection))
-                    {
-                        Node connectionNode = new Node(connection);
-                        map.put(connection, connectionNode);
-                        nodes.add(connectionNode);
-                        node.addNeighbor(connectionNode, 1);
-                        connectionNode.addNeighbor(node, 1);
-                    }
+                    currentNode.addNeighbor(connectionNode);
                 }
             }
         }
     }
 
-    public LinkedList<SubwayStations.Station> shortestPath(SubwayStations.Station source, SubwayStations.Station destination)
+    public List<SubwayStations.Station> shortestPath(SubwayStations.Station source, SubwayStations.Station destination)
     {
         Node sourceNode = map.get(source);
         Node destinationNode = map.get(destination);
         sourceNode.setDistance(0);
-        Set<Node> visitedNodes = new HashSet<>();
+        List<Node> visitedNodes = new ArrayList<>();
         PriorityQueue<Node> unvisitedQ = new PriorityQueue<>();
         unvisitedQ.add(sourceNode);
         while (!unvisitedQ.isEmpty())
         {
             Node currentNode = unvisitedQ.poll();
-            for (Map.Entry<Node, Integer> adjacencyPair :
-                    currentNode.getAdjacentNodes().entrySet())
+            for (Node neighbor : currentNode.getNeighbors())
             {
-                Node adjacentNode = adjacencyPair.getKey();
-                Integer edgeWeight = adjacencyPair.getValue();
-                if (!visitedNodes.contains(adjacentNode))
+                if (!visitedNodes.contains(neighbor))
                 {
-                    calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
-                    unvisitedQ.add(adjacentNode);
+                    calculateMinimumDistance(neighbor, DISTANCE_BETWEEN_STATIONS, currentNode);
+                    unvisitedQ.add(neighbor);
                 }
             }
             visitedNodes.add(currentNode);
@@ -58,7 +53,7 @@ public class SubwayGraph
                 break;
             }
         }
-        return (LinkedList<SubwayStations.Station>) destinationNode.getShortestPath();
+        return destinationNode.getShortestPath();
     }
 
     private static void calculateMinimumDistance(Node adjacentNode, double edgeWeight, Node currentNode)

@@ -4,8 +4,8 @@ public class Node implements Comparable<Node>
 {
     private SubwayStations.Station station;
     private double distance = Integer.MAX_VALUE; //distance from source node
-    private List<SubwayStations.Station> shortestPath = new LinkedList<>();
-    private Map<Node, Integer> adjacentNodes = new HashMap<>();
+    private List<SubwayStations.Station> shortestPath = new ArrayList<>();
+    private List<Node> neighbors = new ArrayList<>();
 
     public Node(SubwayStations.Station station)
     {
@@ -58,14 +58,14 @@ public class Node implements Comparable<Node>
         return shortestPath;
     }
 
-    public Map<Node, Integer> getAdjacentNodes()
+    public void addNeighbor(Node node)
     {
-        return adjacentNodes;
+        this.neighbors.add(node);
     }
 
-    public void addNeighbor(Node neighbor, int distance)
+    public List<Node> getNeighbors()
     {
-        adjacentNodes.put(neighbor, distance);
+        return neighbors;
     }
 
     public SubwayStations.Station getStation()
