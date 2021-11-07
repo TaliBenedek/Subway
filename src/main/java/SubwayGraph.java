@@ -85,6 +85,7 @@ public class SubwayGraph
     private List<SubwayStations.Station> backtrack(Node source, Node destination)
     {
         List<SubwayStations.Station> shortestPath = new ArrayList<>();
+        shortestPath.add(destination.getStation());
         Node previous = destination.getPrevious();
         shortestPath.add(previous.getStation());
         while(previous != source)
