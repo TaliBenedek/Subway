@@ -1,4 +1,3 @@
-
 import org.junit.Test;
 import org.mockito.internal.util.collections.Sets;
 

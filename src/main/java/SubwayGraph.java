@@ -69,7 +69,7 @@ public class SubwayGraph
         return minNode;
     }
 
-    private static void calculateMinimumDistance(Node adjacentNode, double edgeWeight, Node sourceNode)
+    private void calculateMinimumDistance(Node adjacentNode, double edgeWeight, Node sourceNode)
     {
         double sourceDistance = sourceNode.getDistance();
         if (sourceDistance + edgeWeight < adjacentNode.getDistance())
