@@ -32,23 +32,20 @@ public class SubwayGraph
         Node sourceNode = map.get(source);
         Node destinationNode = map.get(destination);
         sourceNode.setDistance(0);
-        List<Node> visitedNodes = new ArrayList<>();
         List<Node> unvisitedNodes = new ArrayList<>();
-        unvisitedNodes.add(sourceNode);
+        unvisitedNodes.addAll(map.values());
         while (!unvisitedNodes.isEmpty())
         {
             Node currentNode = getShortestDistanceNode(unvisitedNodes);
-            unvisitedNodes.remove(currentNode);
             for (Node neighbor : currentNode.getNeighbors())
             {
-                if (!visitedNodes.contains(neighbor))
+                if (unvisitedNodes.contains(neighbor))
                 {
                     calculateMinimumDistance(neighbor, DISTANCE_BETWEEN_STATIONS, currentNode);
-                    unvisitedNodes.add(neighbor);
                 }
             }
-            visitedNodes.add(currentNode);
-            if(visitedNodes.contains(destinationNode))
+            unvisitedNodes.remove(currentNode);
+            if(currentNode == destinationNode)
             {
                 break;
             }
