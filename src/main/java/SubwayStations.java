@@ -1,7 +1,6 @@
 import com.google.gson.annotations.SerializedName;
 
 import java.util.*;
-import java.util.function.ToDoubleFunction;
 
 public class SubwayStations
 {
@@ -83,15 +82,15 @@ public class SubwayStations
         }
 
         @Override
-        public String toString()
-        {
-            return "Name: " + properties.name + " ObjectId: " + properties.objectid;
-        }
-
-        @Override
         public int hashCode()
         {
             return Objects.hash(properties.objectid);
+        }
+
+        @Override
+        public String toString()
+        {
+            return "Name: " + properties.name + " ObjectId: " + properties.objectid;
         }
     }
 
@@ -132,9 +131,6 @@ public class SubwayStations
 
     public Station getClosestStation(double latitude, double longitude)
     {
-//        Station closestStation = stations.stream()
-//                .min(Comparator.comparingDouble(station -> station.getDistance(latitude, longitude)))
-//                .get();
         Station closestStation = null;
         double minDistance = Double.MAX_VALUE;
         for(Station station: this.stations)
