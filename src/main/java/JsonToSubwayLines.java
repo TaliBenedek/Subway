@@ -9,7 +9,7 @@ public class JsonToSubwayLines
     public SubwayLines readJsonAsMap() throws IOException
     {
         Gson gson = new Gson();
-        InputStream in = ClassLoader.getSystemResourceAsStream("SubwayLines.json");
+        InputStream in = getClass().getClassLoader().getResourceAsStream("SubwayLines.json");
         InputStreamReader reader = new InputStreamReader(in);
         SubwayLines lines = gson.fromJson(reader, SubwayLines.class);
         reader.close();

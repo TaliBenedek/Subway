@@ -9,7 +9,7 @@ public class JsonToSubwayStations
     public SubwayStations readJsonObject() throws IOException
     {
         Gson gson = new Gson();
-        InputStream in = ClassLoader.getSystemResourceAsStream("SubwayStations.json");
+        InputStream in = getClass().getClassLoader().getResourceAsStream("SubwayStations.json");
         InputStreamReader reader = new InputStreamReader(in);
         SubwayStations stations = gson.fromJson(reader, SubwayStations.class);
         reader.close();
