@@ -1,5 +1,5 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.testng.Assert;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class SubwayStationsTest
         subway.connectStations(lines);
 
         //then
-        Assert.assertEquals(expected, subway.stations.get(0).connections);
+        Assertions.assertEquals(expected, subway.stations.get(0).connections);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class SubwayStationsTest
         double distance = subway.stations.get(0).getDistance(50, 50);
 
         //then
-        Assert.assertEquals(124.33, distance, .5);
+        Assertions.assertEquals(124.33, distance, .5);
     }
 
     @Test
@@ -49,6 +49,6 @@ public class SubwayStationsTest
         SubwayStations.Station closestStation = subway.getClosestStation(-73.99, 40.73);
 
         //then
-        Assert.assertEquals(subway.stations.get(0), closestStation);
+        Assertions.assertEquals(subway.stations.get(0), closestStation);
     }
 }
